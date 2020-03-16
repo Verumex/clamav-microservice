@@ -1,5 +1,5 @@
-FROM ruby:2.6-alpine
-MAINTAINER Verumex
+FROM ruby:2.7-alpine
+MAINTAINER Verumex, Inc.
 
 # Install build dependencies
 RUN apk --no-cache add clamav clamav-libunrar bash bind-tools rsync ncurses \
@@ -12,10 +12,19 @@ RUN mkdir -p /usr/local/sbin/ \
     && chmod 755 /usr/local/sbin/clamav-unofficial-sigs.sh \
     && mkdir -p /etc/clamav-unofficial-sigs/ \
     && wget https://raw.githubusercontent.com/extremeshok/clamav-unofficial-sigs/master/config/master.conf -O /etc/clamav-unofficial-sigs/master.conf \
+    && sed -i 's/^enable_random="yes"/enable_random="no"/g' /etc/clamav-unofficial-sigs/master.conf \
     && wget https://raw.githubusercontent.com/extremeshok/clamav-unofficial-sigs/master/config/user.conf -O /etc/clamav-unofficial-sigs/user.conf \
     && wget https://raw.githubusercontent.com/extremeshok/clamav-unofficial-sigs/master/config/os/os.alpine.conf -O /etc/clamav-unofficial-sigs/os.conf \
     && /usr/local/sbin/clamav-unofficial-sigs.sh --install-cron \
     && freshclam --no-dns
 
-COPY entrypoint.sh /usr/bin/
-ENTRYPOINT ["entrypoint.sh"]
+COPY . /app
+WORKDIR /app
+
+RUN gem install bundler \
+    && bundle config set without development test \
+    && bundle install
+
+EXPOSE 3000
+
+ENTRYPOINT ["./entrypoint.sh"]

@@ -1,0 +1,32 @@
+require:
+  - rubocop-performance
+  - rubocop-rspec
+
+AllCops:
+  TargetRubyVersion: 2.7
+  RSpec:
+    Patterns:
+      - _spec.rb
+      - '(?:^|/)spec/'
+
+Metrics/BlockLength:
+  ExcludedMethods: ['describe', 'context']
+
+RSpec/ExampleLength:
+  Description: Checks for long examples.
+  Enabled: true
+  Max: 15
+  StyleGuide: http://www.rubydoc.info/gems/rubocop-rspec/RuboCop/Cop/RSpec/ExampleLength
+
+RSpec/InstanceVariable:
+  Description: Checks for instance variable usage in specs.
+  AssignmentOnly: false
+  Enabled: false
+  StyleGuide: http://www.rubydoc.info/gems/rubocop-rspec/RuboCop/Cop/RSpec/InstanceVariable
+
+RSpec/MultipleExpectations:
+  Description: Checks if examples contain too many `expect` calls.
+  Enabled: true
+  Max: 5
+  AggregateFailuresByDefault: false
+  StyleGuide: http://www.rubydoc.info/gems/rubocop-rspec/RuboCop/Cop/RSpec/MultipleExpectations

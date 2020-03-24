@@ -12,7 +12,7 @@ end
 class Application < Hanami::API
   # For a service health check
   get '/' do
-    body 'success!'
+    status 200
   end
 
   post '/scan', to: Scanner.new

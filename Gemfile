@@ -25,6 +25,7 @@ group :development do
 end
 
 group :test do
+  gem 'bundler-audit', require: false
   gem 'rack-test'
   gem 'rspec'
 end

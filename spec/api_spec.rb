@@ -3,6 +3,8 @@
 describe 'API', type: :request do
   let(:app) { Application.new }
 
+  before { Clamby.configure(daemonize: false) }
+
   describe 'GET /' do
     it 'returns 200 ok' do
       get '/'
@@ -11,12 +13,12 @@ describe 'API', type: :request do
   end
 
   describe 'POST /scan' do
-    it 'returns 401 unauthorized if credentials are invalid' do
+    it 'returns 401 unauthorized if credentials are not given' do
       post '/scan'
       expect(last_response.status).to eq(401)
     end
 
-    it 'returns 401 unauthorized if credentials are not given' do
+    it 'returns 401 unauthorized if credentials are invalid' do
       allow(ENV).to receive(:fetch).with('API_USERNAME').and_return 'username'
       allow(ENV).to receive(:fetch).with('API_PASSWORD').and_return 'password'
 
@@ -37,16 +39,14 @@ describe 'API', type: :request do
 
         token = Base64.strict_encode64("#{username}:#{password}")
         header 'Authorization', "Basic #{token}"
-
-        @tempfile = Tempfile.new(%w[file .json])
-        @file = Rack::Test::UploadedFile.new(@tempfile.path, 'application/json')
       end
 
-      after { @tempfile.close! }
-
       it 'returns scan result (good)' do
-        allow(Clamby).to receive(:safe?).and_return(true)
-        post '/scan', file: @file
+        tempfile = Tempfile.new(%w[file .json])
+        file = Rack::Test::UploadedFile.new(tempfile.path, 'application/json')
+
+        post '/scan', file: file
+        tempfile.close!
 
         expect(last_response.status).to eq(200)
 
@@ -55,8 +55,11 @@ describe 'API', type: :request do
       end
 
       it 'returns scan result (bad)' do
-        allow(Clamby).to receive(:safe?).and_return(false)
-        post '/scan', file: @file
+        test_file = File.open('spec/fixtures/eicar.txt')
+        file = Rack::Test::UploadedFile.new(test_file.path, 'text/plain')
+
+        post '/scan', file: file
+        test_file.close
 
         expect(last_response.status).to eq(200)
 

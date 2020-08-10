@@ -1,4 +1,4 @@
-This is two-in-one docker image that runs the open-source virus scanner
+This is a two-in-one docker image that runs the open-source virus scanner
 [ClamAV](https://www.clamav.net), automatic virus definition updates as a
 background process and a REST API interface to interact with the ClamAV process.
 

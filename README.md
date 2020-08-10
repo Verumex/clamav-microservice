@@ -1,21 +1,21 @@
-This is two in one docker image so it runs open source virus scanner ClamAV
-(https://www.clamav.net/), automatic virus definition updates as background
-process and REST api interface to interact with ClamAV process.
+This is two-in-one docker image that runs the open-source virus scanner
+[ClamAV](https://www.clamav.net), automatic virus definition updates as a
+background process and a REST API interface to interact with the ClamAV process.
 
 ## Configuration
 
-- `API_USERNAME`: The username of the api in plaintext
-- `API_PASSWORD`: The password of the api in plaintext
+- `API_USERNAME`: The username of the API in plaintext
+- `API_PASSWORD`: The password of the API in plaintext
 
 ## Usage:
 
-#### Run clamav-rest docker image:
+#### Run the clamav-rest docker image:
 
 ```bash
 docker run -p 3000:3000 -e API_USERNAME=username -e API_PASSWORD=password verumex/clamav-microservice
 ```
 
-#### Test that service detects common test virus signature:
+#### Test that the service detects common test virus signatures:
 
 ```bash
 $ curl -i -u username:password -F "file=@eicar.txt" http://localhost:9000/scan
@@ -29,9 +29,9 @@ Connection: Keep-Alive
 {"safe":false}
 ```
 
-The EICAR files can be downloaded [here](https://www.eicar.org/?page_id=3950)
+The EICAR files can be downloaded [here](https://www.eicar.org/?page_id=3950).
 
-#### Test that service returns 200 for clean file:
+#### Test that the service returns 200 for clean file:
 
 ```bash
 $ curl -i -u username:password -F "file=@safe_file.txt" http://localhost:9000/scan
@@ -47,8 +47,8 @@ Connection: Keep-Alive
 
 #### **Status codes:**
 
-- 200 - Scan complete. See [Usage](#usage) for details of scan result
-- 401 - Unauthorized. Invalid username or password
+- 200 - Scan complete: See [Usage](#usage) for scan result details
+- 401 - Unauthorized: Invalid username or password
 - 422 - Scan error due to malformed POST data
 
 ## Developing:

@@ -12,7 +12,9 @@ version_file = File.join(File.dirname(__FILE__), '.ruby-version')
 ruby File.read(version_file).strip
 
 gem 'clamby'
-gem 'hanami-api'
+gem 'hanami-api', '~> 0.2.0'
+gem 'rack', '~> 2.2.0'
+gem 'webrick', '~> 1.7.0'
 
 group :production do
   gem 'nakayoshi_fork'

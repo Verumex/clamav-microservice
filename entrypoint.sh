@@ -1,6 +1,9 @@
 #!/bin/sh
 
-set -e
+# TODO: Re-enable this 'break on first error' line. The virus signature mirrors
+# sometimes return non-existent signature files due to... well.. it's free and
+# probably misconfigured somehow.
+# set -e
 
 echo "Starting virus DB auto updater..."
 freshclam -d

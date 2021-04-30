@@ -1,10 +1,11 @@
 # frozen_string_literal: true
 
+require 'webrick'
 require_relative 'boot'
 
 load_paths = %w[app services].freeze
 load_paths.each do |path|
-  Dir["#{File.dirname(__FILE__)}/../#{path}/**/*.rb"].sort.each do |file|
+  Dir["#{File.dirname(__FILE__)}/../#{path}/**/*.rb"].each do |file|
     require File.expand_path(file)
   end
 end

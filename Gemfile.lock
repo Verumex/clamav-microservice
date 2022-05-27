@@ -23,7 +23,7 @@ GEM
     parallel (1.20.1)
     parser (3.0.1.0)
       ast (~> 2.4.1)
-    rack (2.2.3)
+    rack (2.2.3.1)
     rack-test (1.1.0)
       rack (>= 1.0, < 3)
     rainbow (3.0.0)
@@ -73,7 +73,7 @@ DEPENDENCIES
   clamby
   hanami-api (~> 0.2.0)
   nakayoshi_fork
-  rack (~> 2.2.0)
+  rack (~> 2.2.3)
   rack-test
   rspec
   rubocop

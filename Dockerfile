@@ -1,4 +1,4 @@
-FROM ruby:3.0.1-alpine
+FROM ruby:3.3.3-alpine
 MAINTAINER Verumex, Inc.
 
 # Install build dependencies
